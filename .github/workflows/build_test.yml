@@ -11,8 +11,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Run Integration Tests
-      run: npm run test
+    - name: Clone the GitHub repository to the machine
+      uses: actions/checkout@v4
+    - name: Use Node.js 22
+      uses: actions/setup-node@v4
+      with:
+        node-version: 22
+        cache: 'npm'
+    - name: Install program dependencies
+      run: npm install
+
+    - name: Run npm Security Tests
+      run: npm audit
 
   build_test:
     runs-on: ubuntu-latest
@@ -36,3 +46,5 @@ jobs:
       run: npm install
     - name: Start the program
       run: npm run start & 
+    - name: Run Integration Tests
+      run: npm run test
